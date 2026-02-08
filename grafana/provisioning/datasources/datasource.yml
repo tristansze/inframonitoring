@@ -1,0 +1,10 @@
+# Configure grafana on first boot
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090 # Tells the prometheus endpoint to pull from 
+    isDefault: true
+    editable: false
