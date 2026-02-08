@@ -6,6 +6,7 @@ A server monitoring system using Prometheus and Grafana to track health and perf
 
 - **Prometheus** — time-series database that scrapes and stores metrics
 - **Grafana** — visualization and dashboarding
+- **Alertmanager** — handles alert routing, grouping, and notifications
 - **Node Exporter** — exposes Linux system metrics (CPU, memory, disk, network)
 - **Docker** — containerized deployment simulating a multi-VM environment
 
@@ -29,7 +30,10 @@ docker compose down
 inframonitoring/
 ├── docker-compose.yml                        # Service definitions
 ├── prometheus/
-│   └── prometheus.yml                        # Scrape targets and intervals
+│   ├── prometheus.yml                        # Scrape targets and intervals
+│   └── alert_rules.yml                       # Alert conditions (CPU, memory, disk, node down)
+├── alertmanager/
+│   └── alertmanager.yml                      # Alert routing and receiver config
 └── grafana/
     └── provisioning/
         ├── datasources/

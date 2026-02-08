@@ -1,6 +1,15 @@
 global:
   scrape_interval: 15s       # How often to pull the metrics
-  evaluation_interval: 15s 
+  evaluation_interval: 15s
+
+# Tell prom where alertmanager is
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ["alertmanager:9093"]
+
+rule_files:
+  - "alert_rules.yml"
 
 scrape_configs:
   - job_name: "prometheus"
@@ -8,7 +17,7 @@ scrape_configs:
       - targets: ["prometheus:9090"]
 
   # Scrape the node exporters
-  - job_name: "nodes" # Groups the node exporters together 
+  - job_name: "nodes" # Groups the node exporters together
     static_configs:
       - targets:
           - "node-1:9100"

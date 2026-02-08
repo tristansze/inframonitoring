@@ -22,6 +22,18 @@ services:
     networks:
       - monitoring
 
+  # Alertmanager configuration
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: alertmanager
+    restart: unless-stopped
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    networks:
+      - monitoring
+
   # Scrape metrics every 15s
   prometheus:
     image: prom/prometheus:latest
@@ -31,11 +43,13 @@ services:
       - "9090:9090" # Exposed on port 9090
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/alert_rules.yml:/etc/prometheus/alert_rules.yml:ro
       - prometheus_data:/prometheus
     depends_on:
       - node-1
       - node-2
       - node-3
+      - alertmanager
     networks:
       - monitoring
 
